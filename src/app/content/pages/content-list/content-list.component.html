@@ -1,0 +1,93 @@
+<div class="flex justify-center">
+  <div class="w-[550px]">
+    <section>
+      <div class="relative shadow-sm">
+        <div class="flex items-center bg-gray-100 p-3 rounded-lg">
+          <svg
+            class="w-5 h-5 mr-2 text-gray-500"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9 0a9 9 0 016.855 14.697l5.377 5.378a1 1 0 11-1.414 1.414l-5.378-5.377A9 9 0 119 0zm0 2a7 7 0 100 14 7 7 0 000-14z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <input
+            type="text"
+            placeholder="Search..."
+            class="bg-transparent focus:outline-none w-full pl-2 pr-44"
+          />
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center">
+          <label for="topic" class="text-gray-500">Topic: </label>
+          <select
+            id="topic"
+            name="topic"
+            class="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+            [(ngModel)]="topicSelected"
+            (ngModelChange)="getFullContent()"
+          >
+            <option
+              *ngFor="let topic of topicsFilter"
+              [value]="topic.id"
+              (click)="topicSelected = topic.id"
+            >
+              {{ topic.Name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </section>
+    <section class="mt-8">
+      <div class="grid xl:grid-cols-4 md:grid-cols-3 xs:grid-cols-1 gap-4">
+        <app-category></app-category>
+        <app-category></app-category>
+        <app-category></app-category>
+        <app-category></app-category>
+      </div>
+    </section>
+    <section class="my-5">
+      <div>
+        <ng-container *ngFor="let topic of topics">
+          <app-topic
+            *ngIf="content[topic.id]"
+            [name]="topic.Name"
+            [contentCards]="content[topic.id]"
+          ></app-topic>
+        </ng-container>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- {{ content | json }} -->
+
+<div class="fixed bottom-0 right-0 m-8">
+  <button
+    class="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded-full w-[150px] flex gap-2"
+    (click)="openModal()"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 4.5v15m7.5-7.5h-15"
+      />
+    </svg>
+    <div class="font-semibold">Add content</div>
+  </button>
+</div>
+
+<app-content-modal
+  *ngIf="isModalOpen"
+  (close)="closeModal($event.update)"
+></app-content-modal>

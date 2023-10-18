@@ -1,0 +1,11 @@
+<div
+  class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium rounded-md p-3 my-5"
+>
+  {{ name }}
+</div>
+<div class="grid xl:grid-cols-4 md:grid-cols-3 gap-4">
+  <app-card-content
+    *ngFor="let content of contentCards"
+    [content]="content"
+  ></app-card-content>
+</div>
