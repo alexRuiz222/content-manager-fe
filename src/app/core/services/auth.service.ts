@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginForm } from 'src/app/core/models/login-form.model';
 import { environment } from 'src/environments/environment.development';
+import { UserRegister, UserRegisterResponse } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,13 @@ export class AuthService {
   // login function
   login(loginForm: LoginForm): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/login`, loginForm);
+  }
+
+  register(registryForm: UserRegister): Observable<UserRegisterResponse> {
+    return this.http.post<UserRegisterResponse>(
+      `${this.apiUrl}/auth/register`,
+      registryForm
+    );
   }
 
   //set token to localstorage
